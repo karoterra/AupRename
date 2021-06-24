@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         Title="バージョン情報" Height="145" Width="137" ShowInTaskbar="False" SizeToContent="WidthAndHeight" ResizeMode="NoResize">
     <Grid>
-        <Button x:Name="okButton" Content="OK" Margin="0,93,10,10" Padding="10,1,10,1" Click="okButton_Click" HorizontalAlignment="Right" Width="38" Height="20" VerticalAlignment="Top"/>
+        <Button x:Name="okButton" Content="OK" Margin="0,93,10,10" Padding="10,1,10,1" Click="okButton_Click" HorizontalAlignment="Right" Width="38" Height="20" VerticalAlignment="Top" IsDefault="True"/>
         <Label x:Name="nameLabel" Content="AppName" HorizontalAlignment="Left" Margin="15,10,15,0" VerticalAlignment="Top"/>
         <Label x:Name="versionLabel" Content="Version" HorizontalAlignment="Left" Margin="15,36,15,0" VerticalAlignment="Top"/>
         <Label x:Name="copyrightLabel" Content="Copyright" HorizontalAlignment="Left" Margin="15,62,15,0" VerticalAlignment="Top"/>
