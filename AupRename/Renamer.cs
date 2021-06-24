@@ -34,27 +34,46 @@ namespace AupRename
 
         public string Status { get; set; }
 
-        public string CurrentFilename { get; set; }
+        public bool IsEditing => _aup != null;
 
+        private string CurrentFilename;
         private AviUtlProject _aup;
         private ExEditProject _exedit;
         private List<RenameItem> _renameItems = new();
 
         private void OpenEditor()
         {
-            Process.Start(Editor, ListFilename);
+            try
+            {
+                Process.Start(Editor, ListFilename);
+            }
+            catch (InvalidOperationException)
+            {
+                ShowError("テキストエディタを指定してください。");
+                return;
+            }
+            catch (System.ComponentModel.Win32Exception)
+            {
+                ShowError("テキストエディタが見つかりません。");
+                return;
+            }
             Status = $"{Path.GetFileName(CurrentFilename)} を編集中";
         }
 
         public void NewEdit()
         {
+            CurrentFilename = Filename;
+            _aup = null;
+            _exedit = null;
+            _renameItems.Clear();
+            Status = "";
+
             if (!File.Exists(Filename))
             {
                 ShowError("ファイルが見つかりません");
                 return;
             }
 
-            CurrentFilename = Filename;
             try
             {
                 _aup = new AviUtlProject(CurrentFilename);
@@ -151,6 +170,14 @@ namespace AupRename
                 }
             }
 
+            if (_renameItems.Count == 0)
+            {
+                ShowInfo("編集するファイルがありません。");
+                _aup = null;
+                _exedit = null;
+                return;
+            }
+
             try
             {
                 using StreamWriter sw = new(ListFilename, false, Encoding.UTF8);
@@ -173,6 +200,11 @@ namespace AupRename
 
         public void ReEdit()
         {
+            if (_aup == null)
+            {
+                ShowError("ファイルを開いていません。\n新規編集してください。");
+                return;
+            }
             OpenEditor();
         }
 

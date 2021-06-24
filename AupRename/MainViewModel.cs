@@ -15,15 +15,15 @@ namespace AupRename
         public event PropertyChangedEventHandler PropertyChanged;
         public readonly Renamer Renamer;
 
-        public ICommand OpenFileCommand { get; init; }
-        public ICommand ReferEditorCommand { get; init; }
-        public ICommand NewEditCommand { get; init; }
-        public ICommand ReEditCommand { get; init; }
-        public ICommand ApplyCommand { get; init; }
-        public ICommand RevertCommand { get; init; }
-        public ICommand OpenUrlCommand { get; init; }
-        public ICommand ShowVersionCommand { get; init; }
-        public ICommand ShutdownCommand { get; init; }
+        public DelegateCommand OpenFileCommand { get; init; }
+        public DelegateCommand ReferEditorCommand { get; init; }
+        public DelegateCommand NewEditCommand { get; init; }
+        public DelegateCommand ReEditCommand { get; init; }
+        public DelegateCommand ApplyCommand { get; init; }
+        public DelegateCommand RevertCommand { get; init; }
+        public DelegateCommand OpenUrlCommand { get; init; }
+        public DelegateCommand ShowVersionCommand { get; init; }
+        public DelegateCommand ShutdownCommand { get; init; }
 
         public string Filename
         {
@@ -178,10 +178,23 @@ namespace AupRename
             Renamer = new Renamer();
             OpenFileCommand = new DelegateCommand(OpenFile);
             ReferEditorCommand = new DelegateCommand(ReferEditor);
-            NewEditCommand = new DelegateCommand(() => { Renamer.NewEdit(); RaisePropertyChanged(nameof(Status)); });
-            ReEditCommand = new DelegateCommand(() => { Renamer.ReEdit(); RaisePropertyChanged(nameof(Status)); });
-            ApplyCommand = new DelegateCommand(() => { Renamer.Apply(); RaisePropertyChanged(nameof(Status)); });
-            RevertCommand = new DelegateCommand(() => { Renamer.Revert(); RaisePropertyChanged(nameof(Status)); });
+            NewEditCommand = new DelegateCommand(() =>
+            {
+                Renamer.NewEdit();
+                RaisePropertyChanged(nameof(Status));
+                ReEditCommand.RaiseCanExecuteChanged();
+                ApplyCommand.RaiseCanExecuteChanged();
+                RevertCommand.RaiseCanExecuteChanged();
+            });
+            ReEditCommand = new DelegateCommand(
+                () => { Renamer.ReEdit(); RaisePropertyChanged(nameof(Status)); },
+                () => Renamer.IsEditing);
+            ApplyCommand = new DelegateCommand(
+                () => { Renamer.Apply(); RaisePropertyChanged(nameof(Status)); },
+                () => Renamer.IsEditing);
+            RevertCommand = new DelegateCommand(
+                () => { Renamer.Revert(); RaisePropertyChanged(nameof(Status)); },
+                () => Renamer.IsEditing);
             OpenUrlCommand = new DelegateCommand(OpenUrl);
             ShowVersionCommand = new DelegateCommand(ShowVersion);
             ShutdownCommand = new DelegateCommand(Shutdown);
