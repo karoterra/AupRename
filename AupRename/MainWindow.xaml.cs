@@ -29,5 +29,10 @@ namespace AupRename
                 ((MainViewModel)DataContext).Filename = dropFiles[0];
             }
         }
+
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            ((MainViewModel)DataContext).SaveSetting();
+        }
     }
 }

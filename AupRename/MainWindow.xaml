@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:AupRename"
         mc:Ignorable="d"
-        Title="AupRename" Height="420" Width="420" AllowDrop="True" Drop="Window_Drop" PreviewDragOver="Window_PreviewDragOver" SizeToContent="Height">
+        Title="AupRename" Height="420" Width="420" AllowDrop="True" Drop="Window_Drop" PreviewDragOver="Window_PreviewDragOver" SizeToContent="Height" Closing="Window_Closing">
     <Window.DataContext>
         <local:MainViewModel/>
     </Window.DataContext>

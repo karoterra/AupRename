@@ -186,7 +186,7 @@ namespace AupRename
             ShowVersionCommand = new DelegateCommand(ShowVersion);
             ShutdownCommand = new DelegateCommand(Shutdown);
 
-            Editor = "notepad.exe";
+            LoadSetting();
         }
 
         private void OpenFile()
@@ -228,6 +228,49 @@ namespace AupRename
         private void Shutdown()
         {
             Application.Current.Shutdown();
+        }
+
+        public void LoadSetting()
+        {
+            if (!Properties.Settings.Default.IsUpgrade)
+            {
+                Properties.Settings.Default.Upgrade();
+                Properties.Settings.Default.IsUpgrade = true;
+            }
+
+            Editor = Properties.Settings.Default.Editor;
+            EnableVideo = Properties.Settings.Default.EnableVideo;
+            EnableImage = Properties.Settings.Default.EnableImage;
+            EnableAudio = Properties.Settings.Default.EnableAudio;
+            EnableWaveform = Properties.Settings.Default.EnableWaveform;
+            EnableShadow = Properties.Settings.Default.EnableShadow;
+            EnableBorder = Properties.Settings.Default.EnableBorder;
+            EnableVideoComposition = Properties.Settings.Default.EnableVideoComposition;
+            EnableImageComposition = Properties.Settings.Default.EnableImageComposition;
+            EnableFigure = Properties.Settings.Default.EnableFigure;
+            EnableMask = Properties.Settings.Default.EnableMask;
+            EnableDisplacement = Properties.Settings.Default.EnableDisplacement;
+            EnablePartialFilter = Properties.Settings.Default.EnablePartialFilter;
+            EnableScript = Properties.Settings.Default.EnableScript;
+        }
+
+        public void SaveSetting()
+        {
+            Properties.Settings.Default.Editor = Editor;
+            Properties.Settings.Default.EnableVideo = EnableVideo;
+            Properties.Settings.Default.EnableImage = EnableImage;
+            Properties.Settings.Default.EnableAudio = EnableAudio;
+            Properties.Settings.Default.EnableWaveform = EnableWaveform;
+            Properties.Settings.Default.EnableShadow = EnableShadow;
+            Properties.Settings.Default.EnableBorder = EnableBorder;
+            Properties.Settings.Default.EnableVideoComposition = EnableVideoComposition;
+            Properties.Settings.Default.EnableImageComposition = EnableImageComposition;
+            Properties.Settings.Default.EnableFigure = EnableFigure;
+            Properties.Settings.Default.EnableMask = EnableMask;
+            Properties.Settings.Default.EnableDisplacement = EnableDisplacement;
+            Properties.Settings.Default.EnablePartialFilter = EnablePartialFilter;
+            Properties.Settings.Default.EnableScript = EnableScript;
+            Properties.Settings.Default.Save();
         }
 
         private void RaisePropertyChanged([CallerMemberName] string name = null)
