@@ -9,4 +9,12 @@
     <Copyright>Copyright © 2021 karoterra</Copyright>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="System.Text.Encoding.CodePages" Version="5.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\AupDotNet\src\AupDotNet\AupDotNet.csproj" />
+  </ItemGroup>
+
 </Project>

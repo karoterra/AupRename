@@ -52,13 +52,14 @@
                     <CheckBox x:Name="maskChk" Content="マスク" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,30,0,0" IsChecked="True" Height="15" Grid.Column="1"/>
                     <CheckBox x:Name="displacementChk" Content="ディスプレイスメントマップ" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,50,0,0" IsChecked="True" Height="15" Grid.Column="1"/>
                     <CheckBox x:Name="partialFilterChk" Content="部分フィルタ" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,70,0,0" IsChecked="True" Height="15" Grid.Column="1"/>
+                    <CheckBox x:Name="scriptChk" Content="スクリプト" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,110,0,0" IsChecked="True" Height="15" Grid.Column="1"/>
                 </Grid>
             </GroupBox>
             <StackPanel VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0,301,6,0" Orientation="Horizontal" FlowDirection="RightToLeft">
-                <Button x:Name="revertButton" Content="元に戻す" Padding="12,1,12,1" Margin="0,0,12,0"/>
-                <Button x:Name="applyButton" Content="適用" Padding="12,1,12,1" Margin="0,0,12,0"/>
-                <Button x:Name="reEditButton" Content="再編集" Padding="12,1,12,1" Margin="0,0,12,0"/>
-                <Button x:Name="newEditButton" Content="新規編集" Padding="12,1,12,1"/>
+                <Button x:Name="revertButton" Content="元に戻す" Padding="12,1,12,1" Margin="0,0,12,0" Click="revertButton_Click"/>
+                <Button x:Name="applyButton" Content="適用" Padding="12,1,12,1" Margin="0,0,12,0" Click="applyButton_Click"/>
+                <Button x:Name="reEditButton" Content="再編集" Padding="12,1,12,1" Margin="0,0,12,0" Click="reEditButton_Click"/>
+                <Button x:Name="newEditButton" Content="新規編集" Padding="12,1,12,1" Click="newEditButton_Click"/>
             </StackPanel>
         </Grid>
     </DockPanel>
