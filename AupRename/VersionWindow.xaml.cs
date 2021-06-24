@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -22,6 +23,13 @@ namespace AupRename
         public VersionWindow()
         {
             InitializeComponent();
+
+            Assembly assem = Assembly.GetExecutingAssembly();
+            var assemName = assem.GetName();
+            nameLabel.Content = assemName.Name;
+            var version = assemName.Version;
+            versionLabel.Content = $"Version {version.Major}.{version.Minor}.{version.Build}";
+            copyrightLabel.Content = assem.GetCustomAttribute<AssemblyCopyrightAttribute>().Copyright;
         }
 
         private void okButton_Click(object sender, RoutedEventArgs e)
