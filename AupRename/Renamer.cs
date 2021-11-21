@@ -8,6 +8,7 @@ using System.Windows;
 using Karoterra.AupDotNet;
 using Karoterra.AupDotNet.ExEdit;
 using Karoterra.AupDotNet.ExEdit.Effects;
+using Karoterra.AupDotNet.Extensions;
 
 namespace AupRename
 {
@@ -110,58 +111,64 @@ namespace AupRename
             for (int objIdx = 0; objIdx < _exedit.Objects.Count; objIdx++)
             {
                 var obj = _exedit.Objects[objIdx];
+                if (obj.Chain) continue;
+
                 for (int effectIdx = 0; effectIdx < obj.Effects.Count; effectIdx++)
                 {
                     var effect = obj.Effects[effectIdx];
-                    if (EnableVideo && effect is VideoFileEffect video && video.Filename != "")
+                    if (EnableVideo && effect is VideoFileEffect video && !string.IsNullOrEmpty(video.Filename))
                     {
                         _renameItems.Add(new RenameItem() { ObjectIndex = objIdx, EffectIndex = effectIdx, Filename = video.Filename });
                     }
-                    else if (EnableImage && effect is ImageFileEffect image && image.Filename != "")
+                    else if (EnableImage && effect is ImageFileEffect image && !string.IsNullOrEmpty(image.Filename))
                     {
                         _renameItems.Add(new RenameItem() { ObjectIndex = objIdx, EffectIndex = effectIdx, Filename = image.Filename });
                     }
-                    else if (EnableAudio && effect is AudioFileEffect audio && audio.Filename != "")
+                    else if (EnableAudio && effect is AudioFileEffect audio && !string.IsNullOrEmpty(audio.Filename))
                     {
                         _renameItems.Add(new RenameItem() { ObjectIndex = objIdx, EffectIndex = effectIdx, Filename = audio.Filename });
                     }
-                    else if (EnableWaveform && effect is WaveformEffect waveform && waveform.Filename != "")
+                    else if (EnableWaveform && effect is WaveformEffect waveform && !string.IsNullOrEmpty(waveform.Filename))
                     {
                         _renameItems.Add(new RenameItem() { ObjectIndex = objIdx, EffectIndex = effectIdx, Filename = waveform.Filename });
                     }
-                    else if (EnableShadow && effect is ShadowEffect shadow && shadow.Filename != "")
+                    else if (EnableShadow && effect is ShadowEffect shadow && !string.IsNullOrEmpty(shadow.Filename))
                     {
                         _renameItems.Add(new RenameItem() { ObjectIndex = objIdx, EffectIndex = effectIdx, Filename = shadow.Filename });
                     }
-                    else if (EnableBorder && effect is BorderEffect border && border.Filename != "")
+                    else if (EnableBorder && effect is BorderEffect border && !string.IsNullOrEmpty(border.Filename))
                     {
                         _renameItems.Add(new RenameItem() { ObjectIndex = objIdx, EffectIndex = effectIdx, Filename = border.Filename });
                     }
-                    else if (EnableVideoComposition && effect is VideoCompositionEffect videoComp && videoComp.Filename != "")
+                    else if (EnableVideoComposition && effect is VideoCompositionEffect videoComp && !string.IsNullOrEmpty(videoComp.Filename))
                     {
                         _renameItems.Add(new RenameItem() { ObjectIndex = objIdx, EffectIndex = effectIdx, Filename = videoComp.Filename });
                     }
-                    else if (EnableImageComposition && effect is ImageCompositionEffect imageComp && imageComp.Filename != "")
+                    else if (EnableImageComposition && effect is ImageCompositionEffect imageComp && !string.IsNullOrEmpty(imageComp.Filename))
                     {
                         _renameItems.Add(new RenameItem() { ObjectIndex = objIdx, EffectIndex = effectIdx, Filename = imageComp.Filename });
                     }
-                    else if (EnableFigure && effect is FigureEffect figure && figure.Filename != "")
+                    else if (EnableFigure && effect is FigureEffect figure &&
+                        ((figure.NameType == FigureNameType.File && !string.IsNullOrEmpty(figure.Filename)) || figure.NameType == FigureNameType.Figure))
                     {
-                        _renameItems.Add(new RenameItem() { ObjectIndex = objIdx, EffectIndex = effectIdx, Filename = figure.Filename });
+                        _renameItems.Add(new RenameItem() { ObjectIndex = objIdx, EffectIndex = effectIdx, Filename = figure.Name });
                     }
-                    else if (EnableMask && effect is MaskEffect mask && mask.Filename != "")
+                    else if (EnableMask && effect is MaskEffect mask &&
+                        ((mask.NameType == FigureNameType.File && !string.IsNullOrEmpty(mask.Filename)) || mask.NameType == FigureNameType.Figure))
                     {
-                        _renameItems.Add(new RenameItem() { ObjectIndex = objIdx, EffectIndex = effectIdx, Filename = mask.Filename });
+                        _renameItems.Add(new RenameItem() { ObjectIndex = objIdx, EffectIndex = effectIdx, Filename = mask.Name });
                     }
-                    else if (EnableDisplacement && effect is DisplacementEffect displacement && displacement.Filename != "")
+                    else if (EnableDisplacement && effect is DisplacementEffect displacement &&
+                        ((displacement.NameType == FigureNameType.File && !string.IsNullOrEmpty(displacement.Filename)) || displacement.NameType == FigureNameType.Figure))
                     {
-                        _renameItems.Add(new RenameItem() { ObjectIndex = objIdx, EffectIndex = effectIdx, Filename = displacement.Filename });
+                        _renameItems.Add(new RenameItem() { ObjectIndex = objIdx, EffectIndex = effectIdx, Filename = displacement.Name });
                     }
-                    else if (EnablePartialFilter && effect is PartialFilterEffect pf && pf.Filename != "")
+                    else if (EnablePartialFilter && effect is PartialFilterEffect pf &&
+                        ((pf.NameType == FigureNameType.File && !string.IsNullOrEmpty(pf.Filename)) || pf.NameType == FigureNameType.Figure))
                     {
-                        _renameItems.Add(new RenameItem() { ObjectIndex = objIdx, EffectIndex = effectIdx, Filename = pf.Filename });
+                        _renameItems.Add(new RenameItem() { ObjectIndex = objIdx, EffectIndex = effectIdx, Filename = pf.Name });
                     }
-                    else if (EnableScript && effect is ScriptFileEffect script && script.Params.ContainsKey("file") && script.Params["file"] != "")
+                    else if (EnableScript && effect is ScriptFileEffect script && !string.IsNullOrEmpty(script.Params?.GetValueOrDefault("file")))
                     {
                         var filename = script.Params["file"];
                         filename = filename[1..^1].Replace(@"\\", @"\");
@@ -213,47 +220,59 @@ namespace AupRename
             for (int i = 0; i < _renameItems.Count; i++)
             {
                 var effect = _exedit.Objects[_renameItems[i].ObjectIndex].Effects[_renameItems[i].EffectIndex];
-                switch (effect)
+                try
                 {
-                    case VideoFileEffect video:
-                        video.Filename = newNames[i];
-                        break;
-                    case ImageFileEffect image:
-                        image.Filename = newNames[i];
-                        break;
-                    case AudioFileEffect audio:
-                        audio.Filename = newNames[i];
-                        break;
-                    case WaveformEffect waveform:
-                        waveform.Filename = newNames[i];
-                        break;
-                    case ShadowEffect shadow:
-                        shadow.Filename = newNames[i];
-                        break;
-                    case BorderEffect border:
-                        border.Filename = newNames[i];
-                        break;
-                    case VideoCompositionEffect video:
-                        video.Filename = newNames[i];
-                        break;
-                    case ImageCompositionEffect image:
-                        image.Filename = newNames[i];
-                        break;
-                    case FigureEffect figure:
-                        figure.Filename = newNames[i];
-                        break;
-                    case MaskEffect mask:
-                        mask.Filename = newNames[i];
-                        break;
-                    case DisplacementEffect d:
-                        d.Filename = newNames[i];
-                        break;
-                    case PartialFilterEffect pf:
-                        pf.Filename = newNames[i];
-                        break;
-                    case ScriptFileEffect script:
-                        script.Params["file"] = '"' + newNames[i].Replace(@"\", @"\\") + '"';
-                        break;
+                    switch (effect)
+                    {
+                        case VideoFileEffect video:
+                            video.Filename = newNames[i];
+                            break;
+                        case ImageFileEffect image:
+                            image.Filename = newNames[i];
+                            break;
+                        case AudioFileEffect audio:
+                            audio.Filename = newNames[i];
+                            break;
+                        case WaveformEffect waveform:
+                            waveform.Filename = newNames[i];
+                            break;
+                        case ShadowEffect shadow:
+                            shadow.Filename = newNames[i];
+                            break;
+                        case BorderEffect border:
+                            border.Filename = newNames[i];
+                            break;
+                        case VideoCompositionEffect video:
+                            video.Filename = newNames[i];
+                            break;
+                        case ImageCompositionEffect image:
+                            image.Filename = newNames[i];
+                            break;
+                        case FigureEffect figure:
+                            figure.Name = newNames[i];
+                            break;
+                        case MaskEffect mask:
+                            mask.Name = newNames[i];
+                            break;
+                        case DisplacementEffect d:
+                            d.Name = newNames[i];
+                            break;
+                        case PartialFilterEffect pf:
+                            pf.Name = newNames[i];
+                            break;
+                        case ScriptFileEffect script:
+                            script.Params["file"] = '"' + newNames[i].Replace(@"\", @"\\") + '"';
+                            if (script.BuildParams().GetSjisByteCount() >= script.MaxParamsLength)
+                            {
+                                throw new MaxByteCountOfStringException();
+                            }
+                            break;
+                    }
+                }
+                catch (MaxByteCountOfStringException)
+                {
+                    ShowError($"{i + 1}行目のファイル名が長すぎます。");
+                    return;
                 }
             }
 
