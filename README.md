@@ -4,7 +4,7 @@ AviUtl 拡張編集で使った動画・画像・音声等のファイルのパ�
 
 ## インストール
 
-[Releases](https://github.com/karoterra/AviUtlScriptExtractor/releases)
+[Releases](https://github.com/karoterra/AupRename/releases)
 から最新版の ZIP ファイルをダウンロードし、好きな場所に展開してください。
 
 .NET 5 をインストール済みの方は `AupRename-xxx-win-x64-fd.zip` をダウンロードしてください。
