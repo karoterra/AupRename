@@ -262,7 +262,7 @@ namespace AupRename
                             break;
                         case ScriptFileEffect script:
                             script.Params["file"] = '"' + newNames[i].Replace(@"\", @"\\") + '"';
-                            if (script.BuildParams().GetSjisByteCount() >= script.MaxParamsLength)
+                            if (script.BuildParams().GetSjisByteCount() >= ScriptFileEffect.MaxParamsLength)
                             {
                                 throw new MaxByteCountOfStringException();
                             }

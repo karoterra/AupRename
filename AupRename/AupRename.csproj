@@ -10,11 +10,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="System.Text.Encoding.CodePages" Version="5.0.0" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\AupDotNet\src\AupDotNet\AupDotNet.csproj" />
+    <PackageReference Include="Karoterra.AupDotNet" Version="0.1.0" />
   </ItemGroup>
 
   <ItemGroup>
