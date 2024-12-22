@@ -10,7 +10,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Karoterra.AupDotNet" Version="0.1.0" />
+    <PackageReference Include="Karoterra.AupDotNet" Version="0.1.2" />
   </ItemGroup>
 
   <ItemGroup>
