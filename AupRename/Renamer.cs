@@ -89,17 +89,35 @@ namespace AupRename
                 ShowError("AviUtlプロジェクトファイルではありません。");
                 return;
             }
+            catch (Exception ex)
+            {
+                ShowError("AviUtlプロジェクトファイル読み込み中にエラーが発生しました。\nファイルが破損している可能性があります。");
+                LogException(ex);
+                return;
+            }
 
             _exedit = null;
-            for (int i = 0; i < _aup.FilterProjects.Count; i++)
+            try
             {
-                if (_aup.FilterProjects[i] is RawFilterProject filter && filter.Name == "拡張編集")
+                for (int i = 0; i < _aup.FilterProjects.Count; i++)
                 {
-                    _exedit = new ExEditProject(filter);
-                    _aup.FilterProjects[i] = _exedit;
-                    break;
+                    if (_aup.FilterProjects[i] is RawFilterProject filter && filter.Name == "拡張編集")
+                    {
+                        _exedit = new ExEditProject(filter);
+                        _aup.FilterProjects[i] = _exedit;
+                        break;
+                    }
                 }
             }
+            catch (Exception ex)
+            {
+                ShowError("AviUtlプロジェクトファイル読み込み中にエラーが発生しました。\nファイルが破損している可能性があります。");
+                LogException(ex);
+                _exedit = null;
+                _aup = null;
+                return;
+            }
+
             if (_exedit == null)
             {
                 ShowError("拡張編集のデータが見つかりません。");
@@ -357,6 +375,22 @@ namespace AupRename
         private static void ShowInfo(string message)
         {
             MessageBox.Show(message, "AupRename", MessageBoxButton.OK, MessageBoxImage.Information);
+        }
+
+        private static void LogException(Exception ex)
+        {
+            string logFilePath = "log.txt";
+
+            try
+            {
+                File.AppendAllText(logFilePath,
+                    $"[{DateTime.Now}] {ex.GetType()}: {ex.Message}\n{ex.StackTrace}\n\n"
+                );
+            }
+            catch (Exception logEx)
+            {
+                ShowError($"エラーログの書き込みに失敗しました。: {logEx.Message}");
+            }
         }
     }
 }
