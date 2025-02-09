@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
-    <TargetFramework>net6.0-windows</TargetFramework>
+    <TargetFramework>net8.0-windows</TargetFramework>
     <UseWPF>true</UseWPF>
     <Version>0.2.1</Version>
     <Authors>karoterra</Authors>
@@ -10,7 +10,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Karoterra.AupDotNet" Version="0.1.2" />
+    <PackageReference Include="Karoterra.AupDotNet" Version="0.2.0" />
   </ItemGroup>
 
   <ItemGroup>
