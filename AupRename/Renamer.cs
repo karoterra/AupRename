@@ -16,8 +16,8 @@ namespace AupRename
     {
         private const string ListFilename = @".\list.txt";
 
-        public string Filename { get; set; }
-        public string Editor { get; set; }
+        public string Filename { get; set; } = "";
+        public string Editor { get; set; } = "";
 
         public bool EnableVideo { get; set; }
         public bool EnableImage { get; set; }
@@ -33,14 +33,14 @@ namespace AupRename
         public bool EnablePartialFilter { get; set; }
         public bool EnableScript { get; set; }
 
-        public string Status { get; set; }
+        public string Status { get; set; } = "";
 
         public bool IsEditing => _aup != null;
 
-        private string CurrentFilename;
-        private AviUtlProject _aup;
-        private ExEditProject _exedit;
-        private List<RenameItem> _renameItems = new();
+        private string CurrentFilename = "";
+        private AviUtlProject? _aup;
+        private ExEditProject? _exedit;
+        private readonly List<RenameItem> _renameItems = [];
 
         private void OpenEditor()
         {
@@ -235,6 +235,12 @@ namespace AupRename
 
         private void Rename(List<string> newNames)
         {
+            if (_aup == null || _exedit == null)
+            {
+                ShowError("ファイルを指定して新規編集してください。");
+                return;
+            }
+
             for (int i = 0; i < _renameItems.Count; i++)
             {
                 var effect = _exedit.Objects[_renameItems[i].ObjectIndex].Effects[_renameItems[i].EffectIndex];
@@ -279,10 +285,13 @@ namespace AupRename
                             pf.Name = newNames[i];
                             break;
                         case ScriptFileEffect script:
-                            script.Params["file"] = '"' + newNames[i].Replace(@"\", @"\\") + '"';
-                            if (script.BuildParams().GetSjisByteCount() >= ScriptFileEffect.MaxParamsLength)
+                            if (script.Params != null)
                             {
-                                throw new MaxByteCountOfStringException();
+                                script.Params["file"] = '"' + newNames[i].Replace(@"\", @"\\") + '"';
+                                if (script.BuildParams().GetSjisByteCount() >= ScriptFileEffect.MaxParamsLength)
+                                {
+                                    throw new MaxByteCountOfStringException();
+                                }
                             }
                             break;
                     }
@@ -322,11 +331,11 @@ namespace AupRename
                 return;
             }
 
-            List<string> newNames = new();
+            List<string> newNames = [];
             try
             {
                 using StreamReader sr = new(ListFilename, Encoding.UTF8);
-                string line;
+                string? line;
                 while ((line = sr.ReadLine()) != null)
                 {
                     if (line.Length > 0)

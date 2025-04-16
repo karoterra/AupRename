@@ -4,6 +4,6 @@
     {
         public int ObjectIndex;
         public int EffectIndex;
-        public string Filename;
+        public string Filename = "";
     }
 }

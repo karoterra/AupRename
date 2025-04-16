@@ -12,7 +12,7 @@ namespace AupRename
     {
         private const string Url = "https://github.com/karoterra/AupRename";
 
-        public event PropertyChangedEventHandler PropertyChanged;
+        public event PropertyChangedEventHandler? PropertyChanged;
         public readonly Renamer Renamer;
 
         public DelegateCommand OpenFileCommand { get; init; }
@@ -178,14 +178,6 @@ namespace AupRename
             Renamer = new Renamer();
             OpenFileCommand = new DelegateCommand(OpenFile);
             ReferEditorCommand = new DelegateCommand(ReferEditor);
-            NewEditCommand = new DelegateCommand(() =>
-            {
-                Renamer.NewEdit();
-                RaisePropertyChanged(nameof(Status));
-                ReEditCommand.RaiseCanExecuteChanged();
-                ApplyCommand.RaiseCanExecuteChanged();
-                RevertCommand.RaiseCanExecuteChanged();
-            });
             ReEditCommand = new DelegateCommand(
                 () => { Renamer.ReEdit(); RaisePropertyChanged(nameof(Status)); },
                 () => Renamer.IsEditing);
@@ -195,6 +187,14 @@ namespace AupRename
             RevertCommand = new DelegateCommand(
                 () => { Renamer.Revert(); RaisePropertyChanged(nameof(Status)); },
                 () => Renamer.IsEditing);
+            NewEditCommand = new DelegateCommand(() =>
+            {
+                Renamer.NewEdit();
+                RaisePropertyChanged(nameof(Status));
+                ReEditCommand.RaiseCanExecuteChanged();
+                ApplyCommand.RaiseCanExecuteChanged();
+                RevertCommand.RaiseCanExecuteChanged();
+            });
             OpenUrlCommand = new DelegateCommand(OpenUrl);
             ShowVersionCommand = new DelegateCommand(ShowVersion);
             ShutdownCommand = new DelegateCommand(Shutdown);
@@ -286,7 +286,7 @@ namespace AupRename
             Properties.Settings.Default.Save();
         }
 
-        private void RaisePropertyChanged([CallerMemberName] string name = null)
+        private void RaisePropertyChanged([CallerMemberName] string? name = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
         }

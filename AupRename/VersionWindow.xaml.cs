@@ -27,9 +27,9 @@ namespace AupRename
             Assembly assem = Assembly.GetExecutingAssembly();
             var assemName = assem.GetName();
             nameLabel.Content = assemName.Name;
-            var version = assemName.Version;
+            Version version = assemName.Version ?? new Version(0, 0, 0);
             versionLabel.Content = $"Version {version.Major}.{version.Minor}.{version.Build}";
-            copyrightLabel.Content = assem.GetCustomAttribute<AssemblyCopyrightAttribute>().Copyright;
+            copyrightLabel.Content = assem.GetCustomAttribute<AssemblyCopyrightAttribute>()?.Copyright;
         }
 
         private void okButton_Click(object sender, RoutedEventArgs e)
