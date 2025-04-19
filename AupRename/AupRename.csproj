@@ -12,6 +12,7 @@
 
   <ItemGroup>
     <PackageReference Include="Karoterra.AupDotNet" Version="0.2.0" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
   </ItemGroup>
 
   <ItemGroup>
