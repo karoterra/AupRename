@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Windows;
+using AupRename.RenameItems;
 using Karoterra.AupDotNet;
 using Karoterra.AupDotNet.ExEdit;
 using Karoterra.AupDotNet.ExEdit.Effects;
@@ -16,8 +17,8 @@ namespace AupRename
     {
         private const string ListFilename = @".\list.txt";
 
-        public string Filename { get; set; }
-        public string Editor { get; set; }
+        public string Filename { get; set; } = "";
+        public string Editor { get; set; } = "";
 
         public bool EnableVideo { get; set; }
         public bool EnableImage { get; set; }
@@ -32,15 +33,17 @@ namespace AupRename
         public bool EnableDisplacement { get; set; }
         public bool EnablePartialFilter { get; set; }
         public bool EnableScript { get; set; }
+        public bool EnablePsdToolKit { get; set; }
 
-        public string Status { get; set; }
+        public string Status { get; set; } = "";
 
         public bool IsEditing => _aup != null;
 
-        private string CurrentFilename;
-        private AviUtlProject _aup;
-        private ExEditProject _exedit;
-        private List<RenameItem> _renameItems = new();
+        private string CurrentFilename = "";
+        private AviUtlProject? _aup;
+        private ExEditProject? _exedit;
+        private PsdToolKitProject? _psdToolKit;
+        private readonly List<IRenameItem> _renameItems = [];
 
         private void OpenEditor()
         {
@@ -66,6 +69,7 @@ namespace AupRename
             CurrentFilename = Filename;
             _aup = null;
             _exedit = null;
+            _psdToolKit = null;
             _renameItems.Clear();
             Status = "";
 
@@ -97,6 +101,7 @@ namespace AupRename
             }
 
             _exedit = null;
+            _psdToolKit = null;
             try
             {
                 for (int i = 0; i < _aup.FilterProjects.Count; i++)
@@ -105,7 +110,11 @@ namespace AupRename
                     {
                         _exedit = new ExEditProject(filter);
                         _aup.FilterProjects[i] = _exedit;
-                        break;
+                    }
+                    if (_aup.FilterProjects[i].Name == "PSDToolKit")
+                    {
+                        _psdToolKit = new PsdToolKitProject(_aup.FilterProjects[i]);
+                        _aup.FilterProjects[i] = _psdToolKit;
                     }
                 }
             }
@@ -126,6 +135,7 @@ namespace AupRename
             }
 
             _renameItems.Clear();
+            // 拡張編集
             for (int objIdx = 0; objIdx < _exedit.Objects.Count; objIdx++)
             {
                 var obj = _exedit.Objects[objIdx];
@@ -134,64 +144,67 @@ namespace AupRename
                 for (int effectIdx = 0; effectIdx < obj.Effects.Count; effectIdx++)
                 {
                     var effect = obj.Effects[effectIdx];
-                    if (EnableVideo && effect is VideoFileEffect video && !string.IsNullOrEmpty(video.Filename))
+                    IRenameItem? renameItem = null;
+                    if(EnableVideo && (renameItem = VideoFileRenameItem.CreateIfTarget(effect)) != null)
                     {
-                        _renameItems.Add(new RenameItem() { ObjectIndex = objIdx, EffectIndex = effectIdx, Filename = video.Filename });
+                        _renameItems.Add(renameItem);
                     }
-                    else if (EnableImage && effect is ImageFileEffect image && !string.IsNullOrEmpty(image.Filename))
+                    else if (EnableImage && (renameItem = ImageFileRenameItem.CreateIfTarget(effect)) != null)
                     {
-                        _renameItems.Add(new RenameItem() { ObjectIndex = objIdx, EffectIndex = effectIdx, Filename = image.Filename });
+                        _renameItems.Add(renameItem);
                     }
-                    else if (EnableAudio && effect is AudioFileEffect audio && !string.IsNullOrEmpty(audio.Filename))
+                    else if (EnableAudio && (renameItem = AudioFileRenameItem.CreateIfTarget(effect)) != null)
                     {
-                        _renameItems.Add(new RenameItem() { ObjectIndex = objIdx, EffectIndex = effectIdx, Filename = audio.Filename });
+                        _renameItems.Add(renameItem);
                     }
-                    else if (EnableWaveform && effect is WaveformEffect waveform && !string.IsNullOrEmpty(waveform.Filename))
+                    else if (EnableWaveform && (renameItem = WaveformRenameItem.CreateIfTarget(effect)) != null)
                     {
-                        _renameItems.Add(new RenameItem() { ObjectIndex = objIdx, EffectIndex = effectIdx, Filename = waveform.Filename });
+                        _renameItems.Add(renameItem);
                     }
-                    else if (EnableShadow && effect is ShadowEffect shadow && !string.IsNullOrEmpty(shadow.Filename))
+                    else if (EnableShadow && (renameItem = ShadowRenameItem.CreateIfTarget(effect)) != null)
                     {
-                        _renameItems.Add(new RenameItem() { ObjectIndex = objIdx, EffectIndex = effectIdx, Filename = shadow.Filename });
+                        _renameItems.Add(renameItem);
                     }
-                    else if (EnableBorder && effect is BorderEffect border && !string.IsNullOrEmpty(border.Filename))
+                    else if (EnableBorder && (renameItem = BorderRenameItem.CreateIfTarget(effect)) != null)
                     {
-                        _renameItems.Add(new RenameItem() { ObjectIndex = objIdx, EffectIndex = effectIdx, Filename = border.Filename });
+                        _renameItems.Add(renameItem);
                     }
-                    else if (EnableVideoComposition && effect is VideoCompositionEffect videoComp && !string.IsNullOrEmpty(videoComp.Filename))
+                    else if (EnableVideoComposition && (renameItem = VideoCompositionRenameItem.CreateIfTarget(effect)) != null)
                     {
-                        _renameItems.Add(new RenameItem() { ObjectIndex = objIdx, EffectIndex = effectIdx, Filename = videoComp.Filename });
+                        _renameItems.Add(renameItem);
                     }
-                    else if (EnableImageComposition && effect is ImageCompositionEffect imageComp && !string.IsNullOrEmpty(imageComp.Filename))
+                    else if (EnableImageComposition && (renameItem = ImageCompositionRenameItem.CreateIfTarget(effect)) != null)
                     {
-                        _renameItems.Add(new RenameItem() { ObjectIndex = objIdx, EffectIndex = effectIdx, Filename = imageComp.Filename });
+                        _renameItems.Add(renameItem);
                     }
-                    else if (EnableFigure && effect is FigureEffect figure &&
-                        ((figure.NameType == FigureNameType.File && !string.IsNullOrEmpty(figure.Filename)) || figure.NameType == FigureNameType.Figure))
+                    else if (EnableFigure && (renameItem = FigureRenameItem.CreateIfTarget(effect)) != null)
                     {
-                        _renameItems.Add(new RenameItem() { ObjectIndex = objIdx, EffectIndex = effectIdx, Filename = figure.Name });
+                        _renameItems.Add(renameItem);
                     }
-                    else if (EnableMask && effect is MaskEffect mask &&
-                        ((mask.NameType == FigureNameType.File && !string.IsNullOrEmpty(mask.Filename)) || mask.NameType == FigureNameType.Figure))
+                    else if (EnableMask && (renameItem = MaskRenameItem.CreateIfTarget(effect)) != null)
                     {
-                        _renameItems.Add(new RenameItem() { ObjectIndex = objIdx, EffectIndex = effectIdx, Filename = mask.Name });
+                        _renameItems.Add(renameItem);
                     }
-                    else if (EnableDisplacement && effect is DisplacementEffect displacement &&
-                        ((displacement.NameType == FigureNameType.File && !string.IsNullOrEmpty(displacement.Filename)) || displacement.NameType == FigureNameType.Figure))
+                    else if (EnableDisplacement && (renameItem = DisplacementRenameItem.CreateIfTarget(effect)) != null)
                     {
-                        _renameItems.Add(new RenameItem() { ObjectIndex = objIdx, EffectIndex = effectIdx, Filename = displacement.Name });
+                        _renameItems.Add(renameItem);
                     }
-                    else if (EnablePartialFilter && effect is PartialFilterEffect pf &&
-                        ((pf.NameType == FigureNameType.File && !string.IsNullOrEmpty(pf.Filename)) || pf.NameType == FigureNameType.Figure))
+                    else if (EnablePartialFilter && (renameItem = PartialFilterRenameItem.CreateIfTarget(effect)) != null)
                     {
-                        _renameItems.Add(new RenameItem() { ObjectIndex = objIdx, EffectIndex = effectIdx, Filename = pf.Name });
+                        _renameItems.Add(renameItem);
                     }
-                    else if (EnableScript && effect is ScriptFileEffect script && !string.IsNullOrEmpty(script.Params?.GetValueOrDefault("file")))
+                    else if (EnableScript && (renameItem = ScriptFileRenameItem.CreateIfTarget(effect)) != null)
                     {
-                        var filename = script.Params["file"];
-                        filename = filename[1..^1].Replace(@"\\", @"\");
-                        _renameItems.Add(new RenameItem() { ObjectIndex = objIdx, EffectIndex = effectIdx, Filename = filename });
+                        _renameItems.Add(renameItem);
                     }
+                }
+            }
+            // PSDToolKit
+            if (_psdToolKit != null && EnablePsdToolKit)
+            {
+                foreach (var psdImage in _psdToolKit.Images)
+                {
+                    _renameItems.Add(new PsdRenameItem(psdImage, _exedit.Objects));
                 }
             }
 
@@ -208,7 +221,7 @@ namespace AupRename
                 using StreamWriter sw = new(ListFilename, false, Encoding.UTF8);
                 foreach (var item in _renameItems)
                 {
-                    sw.WriteLine(item.Filename);
+                    sw.WriteLine(item.OldName);
                 }
             }
             catch (IOException)
@@ -235,57 +248,17 @@ namespace AupRename
 
         private void Rename(List<string> newNames)
         {
+            if (_aup == null || _exedit == null)
+            {
+                ShowError("ファイルを指定して新規編集してください。");
+                return;
+            }
+
             for (int i = 0; i < _renameItems.Count; i++)
             {
-                var effect = _exedit.Objects[_renameItems[i].ObjectIndex].Effects[_renameItems[i].EffectIndex];
                 try
                 {
-                    switch (effect)
-                    {
-                        case VideoFileEffect video:
-                            video.Filename = newNames[i];
-                            break;
-                        case ImageFileEffect image:
-                            image.Filename = newNames[i];
-                            break;
-                        case AudioFileEffect audio:
-                            audio.Filename = newNames[i];
-                            break;
-                        case WaveformEffect waveform:
-                            waveform.Filename = newNames[i];
-                            break;
-                        case ShadowEffect shadow:
-                            shadow.Filename = newNames[i];
-                            break;
-                        case BorderEffect border:
-                            border.Filename = newNames[i];
-                            break;
-                        case VideoCompositionEffect video:
-                            video.Filename = newNames[i];
-                            break;
-                        case ImageCompositionEffect image:
-                            image.Filename = newNames[i];
-                            break;
-                        case FigureEffect figure:
-                            figure.Name = newNames[i];
-                            break;
-                        case MaskEffect mask:
-                            mask.Name = newNames[i];
-                            break;
-                        case DisplacementEffect d:
-                            d.Name = newNames[i];
-                            break;
-                        case PartialFilterEffect pf:
-                            pf.Name = newNames[i];
-                            break;
-                        case ScriptFileEffect script:
-                            script.Params["file"] = '"' + newNames[i].Replace(@"\", @"\\") + '"';
-                            if (script.BuildParams().GetSjisByteCount() >= ScriptFileEffect.MaxParamsLength)
-                            {
-                                throw new MaxByteCountOfStringException();
-                            }
-                            break;
-                    }
+                    _renameItems[i].Rename(newNames[i]);
                 }
                 catch (MaxByteCountOfStringException)
                 {
@@ -322,11 +295,11 @@ namespace AupRename
                 return;
             }
 
-            List<string> newNames = new();
+            List<string> newNames = [];
             try
             {
                 using StreamReader sr = new(ListFilename, Encoding.UTF8);
-                string line;
+                string? line;
                 while ((line = sr.ReadLine()) != null)
                 {
                     if (line.Length > 0)
@@ -357,14 +330,35 @@ namespace AupRename
 
         public void Revert()
         {
-            if (_renameItems.Count == 0)
+            if (_aup == null || _renameItems.Count == 0)
             {
                 ShowError("ファイルを指定して新規編集してください。");
                 return;
             }
 
-            var newNames = _renameItems.Select(item => item.Filename).ToList();
-            Rename(newNames);
+            foreach (var item in _renameItems)
+            {
+                item.Revert();
+            }
+
+            try
+            {
+                using BinaryWriter writer = new(File.Create(CurrentFilename));
+                _aup.Write(writer);
+            }
+            catch (IOException)
+            {
+                ShowError("書き込みに失敗しました。");
+                return;
+            }
+            catch (UnauthorizedAccessException)
+            {
+                ShowError("書き込みに失敗しました。");
+                return;
+            }
+
+            ShowInfo("変更を元に戻しました。");
+            Status = $"{Path.GetFileName(CurrentFilename)} の変更をリセット";
         }
 
         private static void ShowError(string message)
