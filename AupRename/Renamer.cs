@@ -33,6 +33,7 @@ namespace AupRename
         public bool EnableDisplacement { get; set; }
         public bool EnablePartialFilter { get; set; }
         public bool EnableScript { get; set; }
+        public bool EnablePsdToolKit { get; set; }
 
         public string Status { get; set; } = "";
 
@@ -41,6 +42,7 @@ namespace AupRename
         private string CurrentFilename = "";
         private AviUtlProject? _aup;
         private ExEditProject? _exedit;
+        private PsdToolKitProject? _psdToolKit;
         private readonly List<IRenameItem> _renameItems = [];
 
         private void OpenEditor()
@@ -67,6 +69,7 @@ namespace AupRename
             CurrentFilename = Filename;
             _aup = null;
             _exedit = null;
+            _psdToolKit = null;
             _renameItems.Clear();
             Status = "";
 
@@ -98,6 +101,7 @@ namespace AupRename
             }
 
             _exedit = null;
+            _psdToolKit = null;
             try
             {
                 for (int i = 0; i < _aup.FilterProjects.Count; i++)
@@ -106,7 +110,11 @@ namespace AupRename
                     {
                         _exedit = new ExEditProject(filter);
                         _aup.FilterProjects[i] = _exedit;
-                        break;
+                    }
+                    if (_aup.FilterProjects[i].Name == "PSDToolKit")
+                    {
+                        _psdToolKit = new PsdToolKitProject(_aup.FilterProjects[i]);
+                        _aup.FilterProjects[i] = _psdToolKit;
                     }
                 }
             }
@@ -127,6 +135,7 @@ namespace AupRename
             }
 
             _renameItems.Clear();
+            // 拡張編集
             for (int objIdx = 0; objIdx < _exedit.Objects.Count; objIdx++)
             {
                 var obj = _exedit.Objects[objIdx];
@@ -188,6 +197,14 @@ namespace AupRename
                     {
                         _renameItems.Add(renameItem);
                     }
+                }
+            }
+            // PSDToolKit
+            if (_psdToolKit != null && EnablePsdToolKit)
+            {
+                foreach (var psdImage in _psdToolKit.Images)
+                {
+                    _renameItems.Add(new PsdRenameItem(psdImage, _exedit.Objects));
                 }
             }
 

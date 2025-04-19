@@ -71,6 +71,8 @@
                         <CheckBox Content="部分フィルタ" Margin="0,5,0,0" IsChecked="{Binding EnablePartialFilter}"/>
                         <Separator Margin="0,7,0,2"/>
                         <CheckBox Content="スクリプト" Margin="0,5,0,0" IsChecked="{Binding EnableScript}"/>
+                        <Separator Margin="0,7,0,2"/>
+                        <CheckBox Content="PSDToolKit" Margin="0,5,0,0" IsChecked="{Binding EnablePsdToolKit}"/>
                     </StackPanel>
                 </Grid>
             </GroupBox>
