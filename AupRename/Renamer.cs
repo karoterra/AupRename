@@ -106,10 +106,18 @@ namespace AupRename
             {
                 for (int i = 0; i < _aup.FilterProjects.Count; i++)
                 {
-                    if (_aup.FilterProjects[i] is RawFilterProject filter && filter.Name == "拡張編集")
+                    if (_aup.FilterProjects[i] is RawFilterProject filter)
                     {
-                        _exedit = new ExEditProject(filter);
-                        _aup.FilterProjects[i] = _exedit;
+                        if (filter.Name == "拡張編集")
+                        {
+                            _exedit = new ExEditProject(filter);
+                            _aup.FilterProjects[i] = _exedit;
+                        }
+                        else if (filter.Name == "Advanced Editing")
+                        {
+                            _exedit = new EnglishExEditProject(filter);
+                            _aup.FilterProjects[i] = _exedit;
+                        }
                     }
                     if (_aup.FilterProjects[i].Name == "PSDToolKit")
                     {
