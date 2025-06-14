@@ -499,6 +499,24 @@ namespace AupRename.Properties {
         }
         
         /// <summary>
+        ///   Language(_L) に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string MainWindow_Menu_Language {
+            get {
+                return ResourceManager.GetString("MainWindow_Menu_Language", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Default に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string MainWindow_Menu_Language_Default {
+            get {
+                return ResourceManager.GetString("MainWindow_Menu_Language_Default", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   New Edit(_N) に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string MainWindow_Menu_NewEdit {
@@ -549,6 +567,15 @@ namespace AupRename.Properties {
         public static string MainWindow_Menu_Revert {
             get {
                 return ResourceManager.GetString("MainWindow_Menu_Revert", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Please restart the application to apply the changes. に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string Message_ChangeLanguage {
+            get {
+                return ResourceManager.GetString("Message_ChangeLanguage", resourceCulture);
             }
         }
         

@@ -13,6 +13,9 @@
     <Window.InputBindings>
         <KeyBinding Command="{Binding OpenFileCommand}" Gesture="Ctrl+O"/>
     </Window.InputBindings>
+    <Window.Resources>
+        <local:LanguageEqualsConverter x:Key="LanguageEqualsConverter"/>
+    </Window.Resources>
     <DockPanel LastChildFill="True">
         <Menu DockPanel.Dock="Top">
             <MenuItem Header="{x:Static properties:Resources.MainWindow_Menu_File}">
@@ -25,6 +28,41 @@
                 <MenuItem Header="{x:Static properties:Resources.MainWindow_Menu_ReEdit}" Command="{Binding ReEditCommand}"/>
                 <MenuItem Header="{x:Static properties:Resources.MainWindow_Menu_Apply}" Command="{Binding ApplyCommand}"/>
                 <MenuItem Header="{x:Static properties:Resources.MainWindow_Menu_Revert}" Command="{Binding RevertCommand}"/>
+            </MenuItem>
+            <MenuItem Header="{x:Static properties:Resources.MainWindow_Menu_Language}">
+                <MenuItem Header="{x:Static properties:Resources.MainWindow_Menu_Language_Default}"
+                          Command="{Binding ChangeLanguageCommand}"
+                          CommandParameter=""
+                          IsCheckable="True">
+                    <MenuItem.IsChecked>
+                        <MultiBinding Converter="{StaticResource LanguageEqualsConverter}" Mode="OneWay">
+                            <Binding Path="Language"/>
+                            <Binding RelativeSource="{RelativeSource Self}" Path="CommandParameter"/>
+                        </MultiBinding>
+                    </MenuItem.IsChecked>
+                </MenuItem>
+                <MenuItem Header="日本語"
+                          Command="{Binding ChangeLanguageCommand}"
+                          CommandParameter="ja-JP"
+                          IsCheckable="True">
+                    <MenuItem.IsChecked>
+                        <MultiBinding Converter="{StaticResource LanguageEqualsConverter}" Mode="OneWay">
+                            <Binding Path="Language"/>
+                            <Binding RelativeSource="{RelativeSource Self}" Path="CommandParameter"/>
+                        </MultiBinding>
+                    </MenuItem.IsChecked>
+                </MenuItem>
+                <MenuItem Header="English"
+                          Command="{Binding ChangeLanguageCommand}"
+                          CommandParameter="en-US"
+                          IsCheckable="True">
+                    <MenuItem.IsChecked>
+                        <MultiBinding Converter="{StaticResource LanguageEqualsConverter}" Mode="OneWay">
+                            <Binding Path="Language"/>
+                            <Binding RelativeSource="{RelativeSource Self}" Path="CommandParameter"/>
+                        </MultiBinding>
+                    </MenuItem.IsChecked>
+                </MenuItem>
             </MenuItem>
             <MenuItem Header="{x:Static properties:Resources.MainWindow_Menu_Help}">
                 <MenuItem Header="{x:Static properties:Resources.MainWindow_Menu_OpenUrl}" Command="{Binding OpenUrlCommand}"/>

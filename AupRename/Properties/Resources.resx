@@ -201,6 +201,12 @@
   <data name="MainWindow_Menu_Help" xml:space="preserve">
     <value>Help(_H)</value>
   </data>
+  <data name="MainWindow_Menu_Language" xml:space="preserve">
+    <value>Language(_L)</value>
+  </data>
+  <data name="MainWindow_Menu_Language_Default" xml:space="preserve">
+    <value>Default</value>
+  </data>
   <data name="MainWindow_Menu_OpenUrl" xml:space="preserve">
     <value>View on GitHub(_W)</value>
   </data>
@@ -305,5 +311,8 @@ Do not remove lines from list.txt.</value>
   </data>
   <data name="Dialog_AupFilter" xml:space="preserve">
     <value>AviUtl Project Files (*.aup)|*.aup|All Files (*.*)|*.*</value>
+  </data>
+  <data name="Message_ChangeLanguage" xml:space="preserve">
+    <value>Please restart the application to apply the changes.</value>
   </data>
 </root>

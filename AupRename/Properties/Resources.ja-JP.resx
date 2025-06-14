@@ -201,6 +201,12 @@
   <data name="MainWindow_Menu_Help" xml:space="preserve">
     <value>ヘルプ(_H)</value>
   </data>
+  <data name="MainWindow_Menu_Language" xml:space="preserve">
+    <value>言語(_L)</value>
+  </data>
+  <data name="MainWindow_Menu_Language_Default" xml:space="preserve">
+    <value>デフォルト</value>
+  </data>
   <data name="MainWindow_Menu_OpenUrl" xml:space="preserve">
     <value>配布ページを開く(_W)</value>
   </data>
@@ -305,5 +311,8 @@ list.txt の行数を減らさないでください。</value>
   </data>
   <data name="Dialog_AupFilter" xml:space="preserve">
     <value>AviUtlプロジェクトファイル (*.aup)|*.aup|全てのファイル (*.*)|*.*</value>
+  </data>
+  <data name="Message_ChangeLanguage" xml:space="preserve">
+    <value>設定変更を反映するにはアプリを再起動してください。</value>
   </data>
 </root>
