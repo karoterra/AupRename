@@ -24,6 +24,7 @@ namespace AupRename
         public DelegateCommand OpenUrlCommand { get; init; }
         public DelegateCommand ShowVersionCommand { get; init; }
         public DelegateCommand ShutdownCommand { get; init; }
+        public DelegateCommand<string> ChangeLanguageCommand { get; init; }
 
         public string Filename
         {
@@ -183,6 +184,16 @@ namespace AupRename
             }
         }
 
+        public string Language
+        {
+            get => Properties.Settings.Default.Language;
+            set
+            {
+                Properties.Settings.Default.Language = value;
+                RaisePropertyChanged();
+            }
+        }
+
         public MainViewModel()
         {
             Renamer = new Renamer();
@@ -208,6 +219,7 @@ namespace AupRename
             OpenUrlCommand = new DelegateCommand(OpenUrl);
             ShowVersionCommand = new DelegateCommand(ShowVersion);
             ShutdownCommand = new DelegateCommand(Shutdown);
+            ChangeLanguageCommand = new DelegateCommand<string>(ChangeLanguage);
 
             LoadSetting();
         }
@@ -216,8 +228,8 @@ namespace AupRename
         {
             OpenFileDialog dialog = new()
             {
-                Title = "AviUtlプロジェクトファイルを選択してください",
-                Filter = "AviUtlプロジェクトファイル (*.aup)|*.aup|全てのファイル (*.*)|*.*",
+                Title = Properties.Resources.Dialog_AupTitle,
+                Filter = Properties.Resources.Dialog_AupFilter,
             };
             if (dialog.ShowDialog() == true)
             {
@@ -229,8 +241,8 @@ namespace AupRename
         {
             OpenFileDialog dialog = new()
             {
-                Title = "テキストエディタを選択してください",
-                Filter = "プログラム (*.exe)|*.exe|全てのファイル (*.*)|*.*",
+                Title = Properties.Resources.Dialog_EditorTitle,
+                Filter = Properties.Resources.Dialog_EditorFilter,
             };
             if (dialog.ShowDialog() == true)
             {
@@ -251,6 +263,12 @@ namespace AupRename
         private void Shutdown()
         {
             Application.Current.Shutdown();
+        }
+
+        private void ChangeLanguage(string? culture)
+        {
+            Language = culture ?? "";
+            MessageBox.Show(Properties.Resources.Message_ChangeLanguage, "AupRename", MessageBoxButton.OK, MessageBoxImage.Information);
         }
 
         public void LoadSetting()

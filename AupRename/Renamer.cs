@@ -53,15 +53,15 @@ namespace AupRename
             }
             catch (InvalidOperationException)
             {
-                ShowError("テキストエディタを指定してください。");
+                ShowError(Properties.Resources.Error_EditorNotSelected);
                 return;
             }
             catch (System.ComponentModel.Win32Exception)
             {
-                ShowError("テキストエディタが見つかりません。");
+                ShowError(Properties.Resources.Error_EditorNotFound);
                 return;
             }
-            Status = $"{Path.GetFileName(CurrentFilename)} を編集中";
+            Status = string.Format(Properties.Resources.Status_OpenEditor, Path.GetFileName(CurrentFilename));
         }
 
         public void NewEdit()
@@ -75,7 +75,7 @@ namespace AupRename
 
             if (!File.Exists(Filename))
             {
-                ShowError("ファイルが見つかりません");
+                ShowError(Properties.Resources.Error_FileNotFound);
                 return;
             }
 
@@ -85,17 +85,17 @@ namespace AupRename
             }
             catch (FileFormatException)
             {
-                ShowError("AviUtlプロジェクトファイルではありません。");
+                ShowError(Properties.Resources.Error_NotAviUtlProjectFile);
                 return;
             }
             catch (EndOfStreamException)
             {
-                ShowError("AviUtlプロジェクトファイルではありません。");
+                ShowError(Properties.Resources.Error_NotAviUtlProjectFile);
                 return;
             }
             catch (Exception ex)
             {
-                ShowError("AviUtlプロジェクトファイル読み込み中にエラーが発生しました。\nファイルが破損している可能性があります。");
+                ShowError(Properties.Resources.Error_CorruptedAviUtlProjectFile);
                 LogException(ex);
                 return;
             }
@@ -128,7 +128,7 @@ namespace AupRename
             }
             catch (Exception ex)
             {
-                ShowError("AviUtlプロジェクトファイル読み込み中にエラーが発生しました。\nファイルが破損している可能性があります。");
+                ShowError(Properties.Resources.Error_CorruptedAviUtlProjectFile);
                 LogException(ex);
                 _exedit = null;
                 _aup = null;
@@ -137,7 +137,7 @@ namespace AupRename
 
             if (_exedit == null)
             {
-                ShowError("拡張編集のデータが見つかりません。");
+                ShowError(Properties.Resources.Error_ExEditNotFound);
                 _aup = null;
                 return;
             }
@@ -218,7 +218,7 @@ namespace AupRename
 
             if (_renameItems.Count == 0)
             {
-                ShowInfo("編集するファイルがありません。");
+                ShowInfo(Properties.Resources.Message_NoFilesToEdit);
                 _aup = null;
                 _exedit = null;
                 return;
@@ -234,7 +234,7 @@ namespace AupRename
             }
             catch (IOException)
             {
-                ShowError("list.txt に書き込めません。\n既にテキストエディタで開いている場合は閉じてください。");
+                ShowError(Properties.Resources.Error_CannotWriteListTxt);
                 _aup = null;
                 _exedit = null;
                 _renameItems.Clear();
@@ -248,7 +248,7 @@ namespace AupRename
         {
             if (_aup == null)
             {
-                ShowError("ファイルを開いていません。\n新規編集してください。");
+                ShowError(Properties.Resources.Error_NoFileOpen);
                 return;
             }
             OpenEditor();
@@ -258,7 +258,7 @@ namespace AupRename
         {
             if (_aup == null || _exedit == null)
             {
-                ShowError("ファイルを指定して新規編集してください。");
+                ShowError(Properties.Resources.Error_NoFileOpen);
                 return;
             }
 
@@ -270,7 +270,7 @@ namespace AupRename
                 }
                 catch (MaxByteCountOfStringException)
                 {
-                    ShowError($"{i + 1}行目のファイル名が長すぎます。");
+                    ShowError(string.Format(Properties.Resources.Error_FileNameTooLong, i + 1));
                     return;
                 }
             }
@@ -282,24 +282,24 @@ namespace AupRename
             }
             catch (IOException)
             {
-                ShowError("書き込みに失敗しました。");
+                ShowError(Properties.Resources.Error_WriteFailed);
                 return;
             }
             catch (UnauthorizedAccessException)
             {
-                ShowError("書き込みに失敗しました。");
+                ShowError(Properties.Resources.Error_WriteFailed);
                 return;
             }
 
-            ShowInfo("リネームが完了しました。");
-            Status = $"{Path.GetFileName(CurrentFilename)} に変更を適用";
+            ShowInfo(Properties.Resources.Message_RenameCompleted);
+            Status = string.Format(Properties.Resources.Status_RenameCompleted, Path.GetFileName(CurrentFilename));
         }
 
         public void Apply()
         {
             if (_renameItems.Count == 0)
             {
-                ShowError("ファイルを指定して新規編集してください。");
+                ShowError(Properties.Resources.Error_NoFileOpen);
                 return;
             }
 
@@ -318,18 +318,18 @@ namespace AupRename
             }
             catch (FileNotFoundException)
             {
-                ShowError("list.txt が見つかりません。");
+                ShowError(Properties.Resources.Error_ListTxtNotFound);
                 return;
             }
 
             if (newNames.Count > _renameItems.Count)
             {
-                ShowError("list.txt: ファイル名が多すぎます。");
+                ShowError(Properties.Resources.Error_TooManyFilenames);
                 return;
             }
             else if (newNames.Count < _renameItems.Count)
             {
-                ShowError("list.txt: ファイル名が少なすぎます。");
+                ShowError(Properties.Resources.Error_TooFewFilenames);
                 return;
             }
 
@@ -340,7 +340,7 @@ namespace AupRename
         {
             if (_aup == null || _renameItems.Count == 0)
             {
-                ShowError("ファイルを指定して新規編集してください。");
+                ShowError(Properties.Resources.Error_NoFileOpen);
                 return;
             }
 
@@ -356,17 +356,17 @@ namespace AupRename
             }
             catch (IOException)
             {
-                ShowError("書き込みに失敗しました。");
+                ShowError(Properties.Resources.Error_WriteFailed);
                 return;
             }
             catch (UnauthorizedAccessException)
             {
-                ShowError("書き込みに失敗しました。");
+                ShowError(Properties.Resources.Error_WriteFailed);
                 return;
             }
 
-            ShowInfo("変更を元に戻しました。");
-            Status = $"{Path.GetFileName(CurrentFilename)} の変更をリセット";
+            ShowInfo(Properties.Resources.Message_RevertCompleted);
+            Status = string.Format(Properties.Resources.Status_RevertCompleted, Path.GetFileName(CurrentFilename));
         }
 
         private static void ShowError(string message)
@@ -391,7 +391,7 @@ namespace AupRename
             }
             catch (Exception logEx)
             {
-                ShowError($"エラーログの書き込みに失敗しました。: {logEx.Message}");
+                ShowError(Properties.Resources.Error_LogWriteFailed + logEx.Message);
             }
         }
     }
