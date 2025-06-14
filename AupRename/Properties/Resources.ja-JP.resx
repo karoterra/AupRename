@@ -1,0 +1,309 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="MainWindow_AupButton" xml:space="preserve">
+    <value>参照</value>
+  </data>
+  <data name="MainWindow_AupHeader" xml:space="preserve">
+    <value>編集するaupファイル (バックアップ推奨)</value>
+  </data>
+  <data name="MainWindow_AupPath" xml:space="preserve">
+    <value>パス</value>
+  </data>
+  <data name="MainWindow_EditorButton" xml:space="preserve">
+    <value>参照</value>
+  </data>
+  <data name="MainWindow_EditorHeader" xml:space="preserve">
+    <value>編集するアプリケーション</value>
+  </data>
+  <data name="MainWindow_EditorPath" xml:space="preserve">
+    <value>パス</value>
+  </data>
+  <data name="MainWindow_FilterHeader" xml:space="preserve">
+    <value>フィルタ</value>
+  </data>
+  <data name="MainWindow_FilterEnableVideo" xml:space="preserve">
+    <value>動画ファイル</value>
+  </data>
+  <data name="MainWindow_FilterEnableBorder" xml:space="preserve">
+    <value>縁取り</value>
+  </data>
+  <data name="MainWindow_FilterEnableDisplacement" xml:space="preserve">
+    <value>ディスプレイスメントマップ</value>
+  </data>
+  <data name="MainWindow_FilterEnableFigure" xml:space="preserve">
+    <value>図形</value>
+  </data>
+  <data name="MainWindow_FilterEnableMask" xml:space="preserve">
+    <value>マスク</value>
+  </data>
+  <data name="MainWindow_FilterEnablePartialFilter" xml:space="preserve">
+    <value>部分フィルタ</value>
+  </data>
+  <data name="MainWindow_FilterEnablePsdToolKit" xml:space="preserve">
+    <value>PSDToolKit</value>
+  </data>
+  <data name="MainWindow_FilterEnableWaveform" xml:space="preserve">
+    <value>音声波形表示</value>
+  </data>
+  <data name="MainWindow_FilterEnableShadow" xml:space="preserve">
+    <value>シャドー</value>
+  </data>
+  <data name="MainWindow_FilterEnableScript" xml:space="preserve">
+    <value>スクリプト</value>
+  </data>
+  <data name="MainWindow_FilterEnableAudio" xml:space="preserve">
+    <value>音声ファイル</value>
+  </data>
+  <data name="MainWindow_FilterEnableImage" xml:space="preserve">
+    <value>画像ファイル</value>
+  </data>
+  <data name="MainWindow_FilterEnableVideoComposition" xml:space="preserve">
+    <value>動画ファイル合成</value>
+  </data>
+  <data name="MainWindow_FilterEnableImageComposition" xml:space="preserve">
+    <value>画像ファイル合成</value>
+  </data>
+  <data name="VersionWindow_Title" xml:space="preserve">
+    <value>AupRename について</value>
+  </data>
+  <data name="MainWindow_ButtonNewEdit" xml:space="preserve">
+    <value>新規編集</value>
+  </data>
+  <data name="MainWindow_ButtonReEdit" xml:space="preserve">
+    <value>再編集</value>
+  </data>
+  <data name="MainWindow_ButtonApply" xml:space="preserve">
+    <value>適用</value>
+  </data>
+  <data name="MainWindow_ButtonRevert" xml:space="preserve">
+    <value>元に戻す</value>
+  </data>
+  <data name="MainWindow_Menu_File" xml:space="preserve">
+    <value>ファイル(_F)</value>
+  </data>
+  <data name="MainWindow_Menu_Help" xml:space="preserve">
+    <value>ヘルプ(_H)</value>
+  </data>
+  <data name="MainWindow_Menu_OpenUrl" xml:space="preserve">
+    <value>配布ページを開く(_W)</value>
+  </data>
+  <data name="MainWindow_Menu_Edit" xml:space="preserve">
+    <value>編集(_E)</value>
+  </data>
+  <data name="MainWindow_Menu_NewEdit" xml:space="preserve">
+    <value>新規編集(_N)</value>
+  </data>
+  <data name="MainWindow_Menu_ReEdit" xml:space="preserve">
+    <value>再編集(_R)</value>
+  </data>
+  <data name="MainWindow_Menu_Apply" xml:space="preserve">
+    <value>適用(_A)</value>
+  </data>
+  <data name="MainWindow_Menu_About" xml:space="preserve">
+    <value>AupRename について(_V)</value>
+  </data>
+  <data name="MainWindow_Menu_Revert" xml:space="preserve">
+    <value>元に戻す(_U)</value>
+  </data>
+  <data name="MainWindow_Menu_Open" xml:space="preserve">
+    <value>開く(_O)</value>
+  </data>
+  <data name="MainWindow_Menu_Quit" xml:space="preserve">
+    <value>終了(_X)</value>
+  </data>
+  <data name="Error_EditorNotSelected" xml:space="preserve">
+    <value>テキストエディタを指定してください。</value>
+  </data>
+  <data name="Error_ExEditNotFound" xml:space="preserve">
+    <value>拡張編集のデータが見つかりません。</value>
+  </data>
+  <data name="Error_FileNotFound" xml:space="preserve">
+    <value>ファイルが見つかりません。</value>
+  </data>
+  <data name="Error_ListTxtNotFound" xml:space="preserve">
+    <value>list.txt が見つかりません。
+新規編集からやり直してください。</value>
+  </data>
+  <data name="Error_EditorNotFound" xml:space="preserve">
+    <value>テキストエディタが見つかりません。</value>
+  </data>
+  <data name="Error_NotAviUtlProjectFile" xml:space="preserve">
+    <value>AviUtlプロジェクトファイルではありません。</value>
+  </data>
+  <data name="Error_NoFileOpen" xml:space="preserve">
+    <value>ファイルを開いていません。
+新規編集してください。</value>
+  </data>
+  <data name="Error_CorruptedAviUtlProjectFile" xml:space="preserve">
+    <value>AviUtlプロジェクトファイル読み込み中にエラーが発生しました。
+ファイルが破損している可能性があります。</value>
+  </data>
+  <data name="Error_CannotWriteListTxt" xml:space="preserve">
+    <value>list.txt に書き込めません。
+既にテキストエディタで開いている場合は閉じてください。</value>
+  </data>
+  <data name="Message_NoFilesToEdit" xml:space="preserve">
+    <value>編集するファイルがありません。</value>
+  </data>
+  <data name="Status_OpenEditor" xml:space="preserve">
+    <value>{0} を編集中</value>
+  </data>
+  <data name="Status_RenameCompleted" xml:space="preserve">
+    <value>{0} に変更を適用</value>
+  </data>
+  <data name="Status_RevertCompleted" xml:space="preserve">
+    <value>{0} の変更をリセット</value>
+  </data>
+  <data name="Error_FileNameTooLong" xml:space="preserve">
+    <value>{0}行目のファイル名が長すぎます。</value>
+  </data>
+  <data name="Error_WriteFailed" xml:space="preserve">
+    <value>書き込みに失敗しました。</value>
+  </data>
+  <data name="Message_RenameCompleted" xml:space="preserve">
+    <value>リネームが完了しました。</value>
+  </data>
+  <data name="Message_RevertCompleted" xml:space="preserve">
+    <value>変更を元に戻しました。</value>
+  </data>
+  <data name="Error_TooManyFilenames" xml:space="preserve">
+    <value>ファイル名が多すぎます。
+list.txt の行数を増やさないでください。</value>
+  </data>
+  <data name="Error_TooFewFilenames" xml:space="preserve">
+    <value>ファイル名が少なすぎます。
+list.txt の行数を減らさないでください。</value>
+  </data>
+  <data name="Error_LogWriteFailed" xml:space="preserve">
+    <value>エラーログの書き込みに失敗しました。：</value>
+  </data>
+  <data name="Dialog_AupTitle" xml:space="preserve">
+    <value>AviUtlプロジェクトファイルを選択してください</value>
+  </data>
+  <data name="Dialog_EditorTitle" xml:space="preserve">
+    <value>AviUtlプロジェクトファイルを選択してください</value>
+  </data>
+  <data name="Dialog_EditorFilter" xml:space="preserve">
+    <value>プログラム (*.exe)|*.exe|全てのファイル (*.*)|*.*</value>
+  </data>
+  <data name="Dialog_AupFilter" xml:space="preserve">
+    <value>AviUtlプロジェクトファイル (*.aup)|*.aup|全てのファイル (*.*)|*.*</value>
+  </data>
+</root>

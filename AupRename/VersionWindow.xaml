@@ -4,8 +4,9 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:AupRename"
+        xmlns:properties="clr-namespace:AupRename.Properties"
         mc:Ignorable="d"
-        Title="バージョン情報" Height="145" Width="137" ShowInTaskbar="False" SizeToContent="WidthAndHeight" ResizeMode="NoResize">
+        Title="{x:Static properties:Resources.VersionWindow_Title}" Height="145" Width="137" ShowInTaskbar="False" SizeToContent="WidthAndHeight" ResizeMode="NoResize">
     <Grid>
         <Button x:Name="okButton" Content="OK" Margin="0,93,10,10" Padding="10,1,10,1" Click="okButton_Click" HorizontalAlignment="Right" Width="38" Height="20" VerticalAlignment="Top" IsDefault="True"/>
         <Label x:Name="nameLabel" Content="AppName" HorizontalAlignment="Left" Margin="15,10,15,0" VerticalAlignment="Top"/>

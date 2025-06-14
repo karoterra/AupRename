@@ -216,8 +216,8 @@ namespace AupRename
         {
             OpenFileDialog dialog = new()
             {
-                Title = "AviUtlプロジェクトファイルを選択してください",
-                Filter = "AviUtlプロジェクトファイル (*.aup)|*.aup|全てのファイル (*.*)|*.*",
+                Title = Properties.Resources.Dialog_AupTitle,
+                Filter = Properties.Resources.Dialog_AupFilter,
             };
             if (dialog.ShowDialog() == true)
             {
@@ -229,8 +229,8 @@ namespace AupRename
         {
             OpenFileDialog dialog = new()
             {
-                Title = "テキストエディタを選択してください",
-                Filter = "プログラム (*.exe)|*.exe|全てのファイル (*.*)|*.*",
+                Title = Properties.Resources.Dialog_EditorTitle,
+                Filter = Properties.Resources.Dialog_EditorFilter,
             };
             if (dialog.ShowDialog() == true)
             {

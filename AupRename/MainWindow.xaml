@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:AupRename"
+        xmlns:properties="clr-namespace:AupRename.Properties"
         mc:Ignorable="d"
         Title="AupRename" Height="420" Width="420" AllowDrop="True" Drop="Window_Drop" PreviewDragOver="Window_PreviewDragOver" SizeToContent="Height" Closing="Window_Closing">
     <Window.DataContext>
@@ -14,73 +15,73 @@
     </Window.InputBindings>
     <DockPanel LastChildFill="True">
         <Menu DockPanel.Dock="Top">
-            <MenuItem Header="ファイル(_F)">
-                <MenuItem Header="開く(_O)" Command="{Binding OpenFileCommand}" InputGestureText="Ctrl+O"/>
+            <MenuItem Header="{x:Static properties:Resources.MainWindow_Menu_File}">
+                <MenuItem Header="{x:Static properties:Resources.MainWindow_Menu_Open}" Command="{Binding OpenFileCommand}" InputGestureText="Ctrl+O"/>
                 <Separator/>
-                <MenuItem Header="終了(_X)" Command="{Binding ShutdownCommand}" InputGestureText="Alt+F4"/>
+                <MenuItem Header="{x:Static properties:Resources.MainWindow_Menu_Quit}" Command="{Binding ShutdownCommand}" InputGestureText="Alt+F4"/>
             </MenuItem>
-            <MenuItem Header="編集(_E)">
-                <MenuItem Header="新規編集(_N)" Command="{Binding NewEditCommand}"/>
-                <MenuItem Header="再編集(_R)" Command="{Binding ReEditCommand}"/>
-                <MenuItem Header="適用(_A)" Command="{Binding ApplyCommand}"/>
-                <MenuItem Header="元に戻す(_U)" Command="{Binding RevertCommand}"/>
+            <MenuItem Header="{x:Static properties:Resources.MainWindow_Menu_Edit}">
+                <MenuItem Header="{x:Static properties:Resources.MainWindow_Menu_NewEdit}" Command="{Binding NewEditCommand}"/>
+                <MenuItem Header="{x:Static properties:Resources.MainWindow_Menu_ReEdit}" Command="{Binding ReEditCommand}"/>
+                <MenuItem Header="{x:Static properties:Resources.MainWindow_Menu_Apply}" Command="{Binding ApplyCommand}"/>
+                <MenuItem Header="{x:Static properties:Resources.MainWindow_Menu_Revert}" Command="{Binding RevertCommand}"/>
             </MenuItem>
-            <MenuItem Header="ヘルプ(_H)">
-                <MenuItem Header="配布ページを開く(_W)" Command="{Binding OpenUrlCommand}"/>
-                <MenuItem Header="バージョン情報(_V)" Command="{Binding ShowVersionCommand}"/>
+            <MenuItem Header="{x:Static properties:Resources.MainWindow_Menu_Help}">
+                <MenuItem Header="{x:Static properties:Resources.MainWindow_Menu_OpenUrl}" Command="{Binding OpenUrlCommand}"/>
+                <MenuItem Header="{x:Static properties:Resources.MainWindow_Menu_About}" Command="{Binding ShowVersionCommand}"/>
             </MenuItem>
         </Menu>
         <StatusBar DockPanel.Dock="Bottom">
             <Label Content="{Binding Status}" Height="29"/>
         </StatusBar>
         <StackPanel>
-            <GroupBox Header="編集するaupファイル (バックアップ推奨)">
+            <GroupBox Header="{x:Static properties:Resources.MainWindow_AupHeader}">
                 <Grid>
-                    <Label Content="パス" HorizontalAlignment="Left"/>
-                    <TextBox TextWrapping="Wrap" VerticalAlignment="Center" Margin="34,0,33,0" Text="{Binding Filename}"/>
-                    <Button Content="参照" VerticalAlignment="Center" HorizontalAlignment="Right" Width="28" Command="{Binding OpenFileCommand}"/>
+                    <Label Content="{x:Static properties:Resources.MainWindow_AupPath}" HorizontalAlignment="Left"/>
+                    <TextBox TextWrapping="Wrap" VerticalAlignment="Center" Margin="34,0,41,0" Text="{Binding Filename}"/>
+                    <Button Content="{x:Static properties:Resources.MainWindow_AupButton}" VerticalAlignment="Center" HorizontalAlignment="Right" Width="40" Command="{Binding OpenFileCommand}"/>
                 </Grid>
             </GroupBox>
-            <GroupBox Header="編集するアプリケーション" Margin="0,5,0,0">
+            <GroupBox Header="{x:Static properties:Resources.MainWindow_EditorHeader}" Margin="0,5,0,0">
                 <Grid>
-                    <Label Content="パス" HorizontalAlignment="Left"/>
-                    <TextBox TextWrapping="Wrap" VerticalAlignment="Center" Margin="34,0,33,0" Text="{Binding Editor}"/>
-                    <Button Content="参照" VerticalAlignment="Center" HorizontalAlignment="Right" Width="28" Command="{Binding ReferEditorCommand}"/>
+                    <Label Content="{x:Static properties:Resources.MainWindow_EditorPath}" HorizontalAlignment="Left"/>
+                    <TextBox TextWrapping="Wrap" VerticalAlignment="Center" Margin="34,0,41,0" Text="{Binding Editor}"/>
+                    <Button Content="{x:Static properties:Resources.MainWindow_EditorButton}" VerticalAlignment="Center" HorizontalAlignment="Right" Width="40" Command="{Binding ReferEditorCommand}"/>
                 </Grid>
             </GroupBox>
-            <GroupBox Header="フィルタ" Margin="0,5,0,0">
+            <GroupBox Header="{x:Static properties:Resources.MainWindow_FilterHeader}" Margin="0,5,0,0">
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition/>
                         <ColumnDefinition/>
                     </Grid.ColumnDefinitions>
                     <StackPanel>
-                        <CheckBox Content="動画ファイル" Margin="0,5,0,0" IsChecked="{Binding EnableVideo}"/>
-                        <CheckBox Content="画像ファイル" Margin="0,5,0,0" IsChecked="{Binding EnableImage}"/>
-                        <CheckBox Content="音声ファイル" Margin="0,5,0,0" IsChecked="{Binding EnableAudio}"/>
-                        <CheckBox Content="音声波形表示" Margin="0,5,0,0" IsChecked="{Binding EnableWaveform}"/>
-                        <CheckBox Content="シャドー" Margin="0,5,0,0" IsChecked="{Binding EnableShadow}"/>
-                        <CheckBox Content="縁取り" Margin="0,5,0,0" IsChecked="{Binding EnableBorder}"/>
-                        <CheckBox Content="動画ファイル合成" Margin="0,5,0,0" IsChecked="{Binding EnableVideoComposition}"/>
-                        <CheckBox Content="画像ファイル合成" Margin="0,5,0,0" IsChecked="{Binding EnableImageComposition}"/>
+                        <CheckBox Content="{x:Static properties:Resources.MainWindow_FilterEnableVideo}" Margin="0,5,0,0" IsChecked="{Binding EnableVideo}"/>
+                        <CheckBox Content="{x:Static properties:Resources.MainWindow_FilterEnableImage}" Margin="0,5,0,0" IsChecked="{Binding EnableImage}"/>
+                        <CheckBox Content="{x:Static properties:Resources.MainWindow_FilterEnableAudio}" Margin="0,5,0,0" IsChecked="{Binding EnableAudio}"/>
+                        <CheckBox Content="{x:Static properties:Resources.MainWindow_FilterEnableWaveform}" Margin="0,5,0,0" IsChecked="{Binding EnableWaveform}"/>
+                        <CheckBox Content="{x:Static properties:Resources.MainWindow_FilterEnableShadow}" Margin="0,5,0,0" IsChecked="{Binding EnableShadow}"/>
+                        <CheckBox Content="{x:Static properties:Resources.MainWindow_FilterEnableBorder}" Margin="0,5,0,0" IsChecked="{Binding EnableBorder}"/>
+                        <CheckBox Content="{x:Static properties:Resources.MainWindow_FilterEnableVideoComposition}" Margin="0,5,0,0" IsChecked="{Binding EnableVideoComposition}"/>
+                        <CheckBox Content="{x:Static properties:Resources.MainWindow_FilterEnableImageComposition}" Margin="0,5,0,0" IsChecked="{Binding EnableImageComposition}"/>
                     </StackPanel>
                     <StackPanel Grid.Column="1">
-                        <CheckBox Content="図形" Margin="0,5,0,0" IsChecked="{Binding EnableFigure}"/>
-                        <CheckBox Content="マスク" Margin="0,5,0,0" IsChecked="{Binding EnableMask}"/>
-                        <CheckBox Content="ディスプレイスメントマップ" Margin="0,5,0,0" IsChecked="{Binding EnableDisplacement}"/>
-                        <CheckBox Content="部分フィルタ" Margin="0,5,0,0" IsChecked="{Binding EnablePartialFilter}"/>
+                        <CheckBox Content="{x:Static properties:Resources.MainWindow_FilterEnableFigure}" Margin="0,5,0,0" IsChecked="{Binding EnableFigure}"/>
+                        <CheckBox Content="{x:Static properties:Resources.MainWindow_FilterEnableMask}" Margin="0,5,0,0" IsChecked="{Binding EnableMask}"/>
+                        <CheckBox Content="{x:Static properties:Resources.MainWindow_FilterEnableDisplacement}" Margin="0,5,0,0" IsChecked="{Binding EnableDisplacement}"/>
+                        <CheckBox Content="{x:Static properties:Resources.MainWindow_FilterEnablePartialFilter}" Margin="0,5,0,0" IsChecked="{Binding EnablePartialFilter}"/>
                         <Separator Margin="0,7,0,2"/>
-                        <CheckBox Content="スクリプト" Margin="0,5,0,0" IsChecked="{Binding EnableScript}"/>
+                        <CheckBox Content="{x:Static properties:Resources.MainWindow_FilterEnableScript}" Margin="0,5,0,0" IsChecked="{Binding EnableScript}"/>
                         <Separator Margin="0,7,0,2"/>
-                        <CheckBox Content="PSDToolKit" Margin="0,5,0,0" IsChecked="{Binding EnablePsdToolKit}"/>
+                        <CheckBox Content="{x:Static properties:Resources.MainWindow_FilterEnablePsdToolKit}" Margin="0,5,0,0" IsChecked="{Binding EnablePsdToolKit}"/>
                     </StackPanel>
                 </Grid>
             </GroupBox>
             <StackPanel VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0,5,0,5" Orientation="Horizontal" FlowDirection="LeftToRight">
-                <Button Content="新規編集" Padding="12,1,12,1" Margin="0,0,12,0" Command="{Binding NewEditCommand}"/>
-                <Button Content="再編集" Padding="12,1,12,1" Margin="0,0,12,0" Command="{Binding ReEditCommand}"/>
-                <Button Content="適用" Padding="12,1,12,1" Margin="0,0,12,0" Command="{Binding ApplyCommand}"/>
-                <Button Content="元に戻す" Padding="12,1,12,1" Margin="0,0,12,0" Command="{Binding RevertCommand}"/>
+                <Button Content="{x:Static properties:Resources.MainWindow_ButtonNewEdit}" Padding="12,1,12,1" Margin="0,0,12,0" Command="{Binding NewEditCommand}"/>
+                <Button Content="{x:Static properties:Resources.MainWindow_ButtonReEdit}" Padding="12,1,12,1" Margin="0,0,12,0" Command="{Binding ReEditCommand}"/>
+                <Button Content="{x:Static properties:Resources.MainWindow_ButtonApply}" Padding="12,1,12,1" Margin="0,0,12,0" Command="{Binding ApplyCommand}"/>
+                <Button Content="{x:Static properties:Resources.MainWindow_ButtonRevert}" Padding="12,1,12,1" Margin="0,0,12,0" Command="{Binding RevertCommand}"/>
             </StackPanel>
         </StackPanel>
     </DockPanel>
